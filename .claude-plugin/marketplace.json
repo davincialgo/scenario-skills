@@ -1,0 +1,11 @@
+{
+  "name": "arrowalgo-scenario-skills",
+  "owner": { "name": "davincialgo" },
+  "plugins": [
+    {
+      "name": "arrowalgo-scenario-skills",
+      "source": "./",
+      "description": "Skills for building, backtesting and honestly validating ArrowAlgo trading scenarios via MCP"
+    }
+  ]
+}

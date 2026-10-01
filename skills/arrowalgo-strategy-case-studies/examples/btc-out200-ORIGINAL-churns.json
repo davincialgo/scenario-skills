@@ -1,0 +1,166 @@
+{
+ "name": "BTC in50-out200 (original, NO state guard - churns when SMA50<close<SMA200)",
+ "warmupHours": 4824,
+ "graph": {
+  "nodes": [
+   {
+    "id": 10,
+    "type": "Data Watcher/Binance",
+    "serviceName": "Binance",
+    "pos": [
+     1300,
+     1300
+    ],
+    "inputs": [],
+    "properties": {
+     "Pair": "BTC-USDT",
+     "Interval": "1d",
+     "Output": "close"
+    }
+   },
+   {
+    "id": 20,
+    "type": "indicator/sma",
+    "serviceName": "indicator",
+    "pos": [
+     700,
+     100
+    ],
+    "inputs": [
+     {
+      "name": "in",
+      "link": 10,
+      "slot_index": 0
+     }
+    ],
+    "properties": {
+     "time_period": 50
+    }
+   },
+   {
+    "id": 21,
+    "type": "indicator/sma",
+    "serviceName": "indicator",
+    "pos": [
+     1000,
+     220
+    ],
+    "inputs": [
+     {
+      "name": "in",
+      "link": 10,
+      "slot_index": 0
+     }
+    ],
+    "properties": {
+     "time_period": 200
+    }
+   },
+   {
+    "id": 30,
+    "type": "math/condition",
+    "serviceName": "math",
+    "pos": [
+     100,
+     1300
+    ],
+    "inputs": [
+     {
+      "name": "A",
+      "link": 10,
+      "slot_index": 0
+     },
+     {
+      "name": "B",
+      "link": 20,
+      "slot_index": 0
+     }
+    ],
+    "properties": {
+     "OP": ">"
+    }
+   },
+   {
+    "id": 31,
+    "type": "math/condition",
+    "serviceName": "math",
+    "pos": [
+     400,
+     1420
+    ],
+    "inputs": [
+     {
+      "name": "A",
+      "link": 10,
+      "slot_index": 0
+     },
+     {
+      "name": "B",
+      "link": 21,
+      "slot_index": 0
+     }
+    ],
+    "properties": {
+     "OP": "<"
+    }
+   },
+   {
+    "id": 300,
+    "type": "Action/FUTURE_OPEN",
+    "serviceName": "FUTURE_OPEN",
+    "pos": [
+     100,
+     100
+    ],
+    "inputs": [
+     {
+      "name": "Trigger",
+      "link": 30,
+      "slot_index": 0
+     }
+    ],
+    "properties": {
+     "Exchange": "Binance",
+     "Pair": "BTC-USDT",
+     "Position Type": "Long",
+     "Order Type": "Market",
+     "Amount": 100,
+     "Amount as": "% of account",
+     "Cancel open orders and replace?": "Cancel all open orders",
+     "Repeat order if consecutive signals occur?": "No",
+     "Max Repeat Orders": 0,
+     "Name": "out200 open",
+     "Leverage": 1
+    }
+   },
+   {
+    "id": 301,
+    "type": "Action/FUTURE_CLOSE",
+    "serviceName": "FUTURE_CLOSE",
+    "pos": [
+     400,
+     220
+    ],
+    "inputs": [
+     {
+      "name": "Trigger",
+      "link": 31,
+      "slot_index": 0
+     }
+    ],
+    "properties": {
+     "Exchange": "Binance",
+     "Pair": "BTC-USDT",
+     "Position Type": "Long",
+     "Order Type": "Market",
+     "Amount": 100,
+     "Amount as": "% of account",
+     "Cancel open orders and replace?": "Cancel all open orders",
+     "Repeat order if consecutive signals occur?": "No",
+     "Max Repeat Orders": 0,
+     "Name": "out200 close"
+    }
+   }
+  ]
+ }
+}

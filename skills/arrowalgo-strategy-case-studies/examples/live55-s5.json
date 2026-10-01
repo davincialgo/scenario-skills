@@ -1,0 +1,1165 @@
+{
+ "name": "Support Retest Live Limit 55 Stop5",
+ "warmupHours": 400,
+ "graph": {
+  "nodes": [
+   {
+    "id": 1,
+    "type": "Data Watcher/Binance",
+    "serviceName": "Binance",
+    "pos": [
+     400,
+     100
+    ],
+    "inputs": [],
+    "outputs": [
+     {
+      "name": "close",
+      "type": "number",
+      "links": [],
+      "slot_index": 0
+     }
+    ],
+    "properties": {
+     "Pair": "BTC-USDT",
+     "Interval": "1d",
+     "Output": "close"
+    }
+   },
+   {
+    "id": 2,
+    "type": "Data Watcher/Binance",
+    "serviceName": "Binance",
+    "pos": [
+     700,
+     250
+    ],
+    "inputs": [],
+    "outputs": [
+     {
+      "name": "high",
+      "type": "number",
+      "links": [],
+      "slot_index": 0
+     }
+    ],
+    "properties": {
+     "Pair": "BTC-USDT",
+     "Interval": "1d",
+     "Output": "high"
+    }
+   },
+   {
+    "id": 3,
+    "type": "indicator/sma",
+    "serviceName": "indicator",
+    "pos": [
+     1000,
+     400
+    ],
+    "inputs": [
+     {
+      "name": "in",
+      "type": "number",
+      "link": 1,
+      "slot_index": 0
+     }
+    ],
+    "outputs": [
+     {
+      "name": "out",
+      "type": "number",
+      "links": [],
+      "slot_index": 0
+     }
+    ],
+    "properties": {
+     "time_period": 200
+    }
+   },
+   {
+    "id": 4,
+    "type": "indicator/max",
+    "serviceName": "indicator",
+    "pos": [
+     1300,
+     550
+    ],
+    "inputs": [
+     {
+      "name": "in",
+      "type": "number",
+      "link": 2,
+      "slot_index": 0
+     }
+    ],
+    "outputs": [
+     {
+      "name": "out",
+      "type": "number",
+      "links": [],
+      "slot_index": 0
+     }
+    ],
+    "properties": {
+     "time_period": 55
+    }
+   },
+   {
+    "id": 5,
+    "type": "indicator/lag",
+    "serviceName": "indicator",
+    "pos": [
+     100,
+     700
+    ],
+    "inputs": [
+     {
+      "name": "in",
+      "type": "number",
+      "link": 4,
+      "slot_index": 0
+     }
+    ],
+    "outputs": [
+     {
+      "name": "out",
+      "type": "number",
+      "links": [],
+      "slot_index": 0
+     }
+    ],
+    "properties": {
+     "time_period": 1
+    }
+   },
+   {
+    "id": 6,
+    "type": "indicator/PositionStatus",
+    "serviceName": "PositionStatus",
+    "pos": [
+     400,
+     850
+    ],
+    "inputs": [
+     {
+      "name": "price",
+      "type": "number",
+      "link": 1,
+      "slot_index": 0
+     }
+    ],
+    "outputs": [
+     {
+      "name": "in_position",
+      "type": "number",
+      "links": [],
+      "slot_index": 0
+     },
+     {
+      "name": "entry_price",
+      "type": "number",
+      "links": [],
+      "slot_index": 1
+     },
+     {
+      "name": "unrealized_pnl%",
+      "type": "number",
+      "links": [],
+      "slot_index": 2
+     },
+     {
+      "name": "candles_in_position",
+      "type": "number",
+      "links": [],
+      "slot_index": 3
+     },
+     {
+      "name": "direction",
+      "type": "number",
+      "links": [],
+      "slot_index": 4
+     }
+    ],
+    "properties": {
+     "Name": "Position Status BTC-USDT",
+     "Exchange": "Binance",
+     "Pair": "BTC-USDT"
+    }
+   },
+   {
+    "id": 7,
+    "type": "math/condition",
+    "serviceName": "math",
+    "pos": [
+     700,
+     1000
+    ],
+    "inputs": [
+     {
+      "name": "A",
+      "type": "number",
+      "link": 1,
+      "slot_index": 0
+     },
+     {
+      "name": "B",
+      "type": "number",
+      "link": 5,
+      "slot_index": 0
+     }
+    ],
+    "outputs": [
+     {
+      "name": "true",
+      "type": "number",
+      "links": [],
+      "slot_index": 0
+     },
+     {
+      "name": "false",
+      "type": "number",
+      "links": [],
+      "slot_index": 1
+     },
+     {
+      "name": "result",
+      "type": "number",
+      "links": [],
+      "slot_index": 2
+     }
+    ],
+    "properties": {
+     "OP": ">"
+    }
+   },
+   {
+    "id": 8,
+    "type": "math/variable",
+    "serviceName": "math",
+    "pos": [
+     1000,
+     1150
+    ],
+    "inputs": [],
+    "outputs": [
+     {
+      "name": "value",
+      "type": "number",
+      "links": [],
+      "slot_index": 0
+     }
+    ],
+    "properties": {
+     "block_name": "support_level",
+     "default": 0
+    }
+   },
+   {
+    "id": 9,
+    "type": "math/gate",
+    "serviceName": "math",
+    "pos": [
+     1300,
+     1300
+    ],
+    "inputs": [
+     {
+      "name": "v",
+      "type": "number",
+      "link": 7,
+      "slot_index": 2
+     },
+     {
+      "name": "A",
+      "type": "number",
+      "link": 5,
+      "slot_index": 0
+     },
+     {
+      "name": "B",
+      "type": "number",
+      "link": 8,
+      "slot_index": 0
+     }
+    ],
+    "outputs": [
+     {
+      "name": "out",
+      "type": "number",
+      "links": [],
+      "slot_index": 0
+     }
+    ],
+    "properties": {}
+   },
+   {
+    "id": 10,
+    "type": "math/variable",
+    "serviceName": "math",
+    "pos": [
+     100,
+     1450
+    ],
+    "inputs": [
+     {
+      "name": "in",
+      "type": "number",
+      "link": 9,
+      "slot_index": 0
+     }
+    ],
+    "outputs": [
+     {
+      "name": "value",
+      "type": "number",
+      "links": [],
+      "slot_index": 0
+     }
+    ],
+    "properties": {
+     "block_name": "support_level",
+     "default": 0
+    }
+   },
+   {
+    "id": 11,
+    "type": "math/fix_number",
+    "serviceName": "math",
+    "pos": [
+     400,
+     1600
+    ],
+    "inputs": [],
+    "outputs": [
+     {
+      "name": "value",
+      "type": "number",
+      "links": [],
+      "slot_index": 0
+     }
+    ],
+    "properties": {
+     "number": 0
+    }
+   },
+   {
+    "id": 12,
+    "type": "math/condition",
+    "serviceName": "math",
+    "pos": [
+     700,
+     1750
+    ],
+    "inputs": [
+     {
+      "name": "A",
+      "type": "number",
+      "link": 6,
+      "slot_index": 0
+     },
+     {
+      "name": "B",
+      "type": "number",
+      "link": 11,
+      "slot_index": 0
+     }
+    ],
+    "outputs": [
+     {
+      "name": "true",
+      "type": "number",
+      "links": [],
+      "slot_index": 0
+     },
+     {
+      "name": "false",
+      "type": "number",
+      "links": [],
+      "slot_index": 1
+     },
+     {
+      "name": "result",
+      "type": "number",
+      "links": [],
+      "slot_index": 2
+     }
+    ],
+    "properties": {
+     "OP": "=="
+    }
+   },
+   {
+    "id": 13,
+    "type": "math/condition",
+    "serviceName": "math",
+    "pos": [
+     1000,
+     1900
+    ],
+    "inputs": [
+     {
+      "name": "A",
+      "type": "number",
+      "link": 1,
+      "slot_index": 0
+     },
+     {
+      "name": "B",
+      "type": "number",
+      "link": 3,
+      "slot_index": 0
+     }
+    ],
+    "outputs": [
+     {
+      "name": "true",
+      "type": "number",
+      "links": [],
+      "slot_index": 0
+     },
+     {
+      "name": "false",
+      "type": "number",
+      "links": [],
+      "slot_index": 1
+     },
+     {
+      "name": "result",
+      "type": "number",
+      "links": [],
+      "slot_index": 2
+     }
+    ],
+    "properties": {
+     "OP": ">"
+    }
+   },
+   {
+    "id": 14,
+    "type": "math/condition",
+    "serviceName": "math",
+    "pos": [
+     1300,
+     2050
+    ],
+    "inputs": [
+     {
+      "name": "A",
+      "type": "number",
+      "link": 1,
+      "slot_index": 0
+     },
+     {
+      "name": "B",
+      "type": "number",
+      "link": 9,
+      "slot_index": 0
+     }
+    ],
+    "outputs": [
+     {
+      "name": "true",
+      "type": "number",
+      "links": [],
+      "slot_index": 0
+     },
+     {
+      "name": "false",
+      "type": "number",
+      "links": [],
+      "slot_index": 1
+     },
+     {
+      "name": "result",
+      "type": "number",
+      "links": [],
+      "slot_index": 2
+     }
+    ],
+    "properties": {
+     "OP": ">"
+    }
+   },
+   {
+    "id": 15,
+    "type": "math/scale",
+    "serviceName": "math",
+    "pos": [
+     100,
+     2200
+    ],
+    "inputs": [
+     {
+      "name": "in",
+      "type": "number",
+      "link": 9,
+      "slot_index": 0
+     }
+    ],
+    "outputs": [
+     {
+      "name": "out",
+      "type": "number",
+      "links": [],
+      "slot_index": 0
+     }
+    ],
+    "properties": {
+     "factor": 0.95
+    }
+   },
+   {
+    "id": 16,
+    "type": "math/condition",
+    "serviceName": "math",
+    "pos": [
+     400,
+     2350
+    ],
+    "inputs": [
+     {
+      "name": "A",
+      "type": "number",
+      "link": 1,
+      "slot_index": 0
+     },
+     {
+      "name": "B",
+      "type": "number",
+      "link": 15,
+      "slot_index": 0
+     }
+    ],
+    "outputs": [
+     {
+      "name": "true",
+      "type": "number",
+      "links": [],
+      "slot_index": 0
+     },
+     {
+      "name": "false",
+      "type": "number",
+      "links": [],
+      "slot_index": 1
+     },
+     {
+      "name": "result",
+      "type": "number",
+      "links": [],
+      "slot_index": 2
+     }
+    ],
+    "properties": {
+     "OP": "<"
+    }
+   },
+   {
+    "id": 17,
+    "type": "math/variable",
+    "serviceName": "math",
+    "pos": [
+     700,
+     2500
+    ],
+    "inputs": [],
+    "outputs": [
+     {
+      "name": "value",
+      "type": "number",
+      "links": [],
+      "slot_index": 0
+     }
+    ],
+    "properties": {
+     "block_name": "level_valid",
+     "default": 0
+    }
+   },
+   {
+    "id": 18,
+    "type": "math/fix_number",
+    "serviceName": "math",
+    "pos": [
+     1000,
+     2650
+    ],
+    "inputs": [],
+    "outputs": [
+     {
+      "name": "value",
+      "type": "number",
+      "links": [],
+      "slot_index": 0
+     }
+    ],
+    "properties": {
+     "number": 1
+    }
+   },
+   {
+    "id": 19,
+    "type": "math/fix_number",
+    "serviceName": "math",
+    "pos": [
+     1300,
+     2800
+    ],
+    "inputs": [],
+    "outputs": [
+     {
+      "name": "value",
+      "type": "number",
+      "links": [],
+      "slot_index": 0
+     }
+    ],
+    "properties": {
+     "number": 0
+    }
+   },
+   {
+    "id": 20,
+    "type": "math/gate",
+    "serviceName": "math",
+    "pos": [
+     100,
+     2950
+    ],
+    "inputs": [
+     {
+      "name": "v",
+      "type": "number",
+      "link": 16,
+      "slot_index": 2
+     },
+     {
+      "name": "A",
+      "type": "number",
+      "link": 19,
+      "slot_index": 0
+     },
+     {
+      "name": "B",
+      "type": "number",
+      "link": 17,
+      "slot_index": 0
+     }
+    ],
+    "outputs": [
+     {
+      "name": "out",
+      "type": "number",
+      "links": [],
+      "slot_index": 0
+     }
+    ],
+    "properties": {}
+   },
+   {
+    "id": 21,
+    "type": "math/gate",
+    "serviceName": "math",
+    "pos": [
+     400,
+     3100
+    ],
+    "inputs": [
+     {
+      "name": "v",
+      "type": "number",
+      "link": 7,
+      "slot_index": 2
+     },
+     {
+      "name": "A",
+      "type": "number",
+      "link": 18,
+      "slot_index": 0
+     },
+     {
+      "name": "B",
+      "type": "number",
+      "link": 20,
+      "slot_index": 0
+     }
+    ],
+    "outputs": [
+     {
+      "name": "out",
+      "type": "number",
+      "links": [],
+      "slot_index": 0
+     }
+    ],
+    "properties": {}
+   },
+   {
+    "id": 22,
+    "type": "math/variable",
+    "serviceName": "math",
+    "pos": [
+     700,
+     3250
+    ],
+    "inputs": [
+     {
+      "name": "in",
+      "type": "number",
+      "link": 21,
+      "slot_index": 0
+     }
+    ],
+    "outputs": [
+     {
+      "name": "value",
+      "type": "number",
+      "links": [],
+      "slot_index": 0
+     }
+    ],
+    "properties": {
+     "block_name": "level_valid",
+     "default": 0
+    }
+   },
+   {
+    "id": 23,
+    "type": "math/fix_number",
+    "serviceName": "math",
+    "pos": [
+     1000,
+     3400
+    ],
+    "inputs": [],
+    "outputs": [
+     {
+      "name": "value",
+      "type": "number",
+      "links": [],
+      "slot_index": 0
+     }
+    ],
+    "properties": {
+     "number": 1
+    }
+   },
+   {
+    "id": 24,
+    "type": "math/condition",
+    "serviceName": "math",
+    "pos": [
+     1300,
+     3550
+    ],
+    "inputs": [
+     {
+      "name": "A",
+      "type": "number",
+      "link": 21,
+      "slot_index": 0
+     },
+     {
+      "name": "B",
+      "type": "number",
+      "link": 23,
+      "slot_index": 0
+     }
+    ],
+    "outputs": [
+     {
+      "name": "true",
+      "type": "number",
+      "links": [],
+      "slot_index": 0
+     },
+     {
+      "name": "false",
+      "type": "number",
+      "links": [],
+      "slot_index": 1
+     },
+     {
+      "name": "result",
+      "type": "number",
+      "links": [],
+      "slot_index": 2
+     }
+    ],
+    "properties": {
+     "OP": "=="
+    }
+   },
+   {
+    "id": 25,
+    "type": "math/condition",
+    "serviceName": "math",
+    "pos": [
+     100,
+     3700
+    ],
+    "inputs": [
+     {
+      "name": "A",
+      "type": "number",
+      "link": 13,
+      "slot_index": 2
+     },
+     {
+      "name": "B",
+      "type": "number",
+      "link": 14,
+      "slot_index": 2
+     },
+     {
+      "name": "C",
+      "type": "number",
+      "link": 24,
+      "slot_index": 2
+     }
+    ],
+    "outputs": [
+     {
+      "name": "true",
+      "type": "number",
+      "links": [],
+      "slot_index": 0
+     },
+     {
+      "name": "false",
+      "type": "number",
+      "links": [],
+      "slot_index": 1
+     },
+     {
+      "name": "result",
+      "type": "number",
+      "links": [],
+      "slot_index": 2
+     }
+    ],
+    "properties": {
+     "OP": "&&",
+     "Inputs": 3
+    }
+   },
+   {
+    "id": 26,
+    "type": "math/scale",
+    "serviceName": "math",
+    "pos": [
+     400,
+     3850
+    ],
+    "inputs": [
+     {
+      "name": "in",
+      "type": "number",
+      "link": 9,
+      "slot_index": 0
+     }
+    ],
+    "outputs": [
+     {
+      "name": "out",
+      "type": "number",
+      "links": [],
+      "slot_index": 0
+     }
+    ],
+    "properties": {
+     "factor": 1.005
+    }
+   },
+   {
+    "id": 27,
+    "type": "math/scale",
+    "serviceName": "math",
+    "pos": [
+     700,
+     4000
+    ],
+    "inputs": [
+     {
+      "name": "in",
+      "type": "number",
+      "link": 1,
+      "slot_index": 0
+     }
+    ],
+    "outputs": [
+     {
+      "name": "out",
+      "type": "number",
+      "links": [],
+      "slot_index": 0
+     }
+    ],
+    "properties": {
+     "factor": 0.955
+    }
+   },
+   {
+    "id": 28,
+    "type": "math/condition",
+    "serviceName": "math",
+    "pos": [
+     1000,
+     4150
+    ],
+    "inputs": [
+     {
+      "name": "A",
+      "type": "number",
+      "link": 26,
+      "slot_index": 0
+     },
+     {
+      "name": "B",
+      "type": "number",
+      "link": 27,
+      "slot_index": 0
+     }
+    ],
+    "outputs": [
+     {
+      "name": "true",
+      "type": "number",
+      "links": [],
+      "slot_index": 0
+     },
+     {
+      "name": "false",
+      "type": "number",
+      "links": [],
+      "slot_index": 1
+     },
+     {
+      "name": "result",
+      "type": "number",
+      "links": [],
+      "slot_index": 2
+     }
+    ],
+    "properties": {
+     "OP": ">="
+    }
+   },
+   {
+    "id": 29,
+    "type": "math/condition",
+    "serviceName": "math",
+    "pos": [
+     1300,
+     4300
+    ],
+    "inputs": [
+     {
+      "name": "A",
+      "type": "number",
+      "link": 12,
+      "slot_index": 2
+     },
+     {
+      "name": "B",
+      "type": "number",
+      "link": 25,
+      "slot_index": 2
+     },
+     {
+      "name": "C",
+      "type": "number",
+      "link": 28,
+      "slot_index": 2
+     }
+    ],
+    "outputs": [
+     {
+      "name": "true",
+      "type": "number",
+      "links": [],
+      "slot_index": 0
+     },
+     {
+      "name": "false",
+      "type": "number",
+      "links": [],
+      "slot_index": 1
+     },
+     {
+      "name": "result",
+      "type": "number",
+      "links": [],
+      "slot_index": 2
+     }
+    ],
+    "properties": {
+     "OP": "&&",
+     "Inputs": 3
+    }
+   },
+   {
+    "id": 30,
+    "type": "Action/FUTURE_OPEN",
+    "serviceName": "FUTURE_OPEN",
+    "pos": [
+     100,
+     4450
+    ],
+    "inputs": [
+     {
+      "name": "Trigger",
+      "type": "number",
+      "link": 29,
+      "slot_index": 0
+     },
+     {
+      "name": "price",
+      "type": "number",
+      "link": 26,
+      "slot_index": 0
+     }
+    ],
+    "outputs": [],
+    "properties": {
+     "Name": "retest-55 live limit open",
+     "Exchange": "Binance",
+     "Pair": "BTC-USDT",
+     "Position Type": "Long",
+     "Order Type": "Limit",
+     "Amount": 95,
+     "Amount as": "% of account",
+     "Margin Type": "USDT",
+     "Leverage": 1,
+     "Cancel open orders and replace?": "Cancel open orders only",
+     "Repeat order if consecutive signals occur?": "Yes",
+     "Max Repeat Orders": 0
+    }
+   },
+   {
+    "id": 31,
+    "type": "math/condition",
+    "serviceName": "math",
+    "pos": [
+     400,
+     4600
+    ],
+    "inputs": [
+     {
+      "name": "A",
+      "type": "number",
+      "link": 1,
+      "slot_index": 0
+     },
+     {
+      "name": "B",
+      "type": "number",
+      "link": 3,
+      "slot_index": 0
+     }
+    ],
+    "outputs": [
+     {
+      "name": "true",
+      "type": "number",
+      "links": [],
+      "slot_index": 0
+     },
+     {
+      "name": "false",
+      "type": "number",
+      "links": [],
+      "slot_index": 1
+     },
+     {
+      "name": "result",
+      "type": "number",
+      "links": [],
+      "slot_index": 2
+     }
+    ],
+    "properties": {
+     "OP": "<"
+    }
+   },
+   {
+    "id": 32,
+    "type": "math/condition",
+    "serviceName": "math",
+    "pos": [
+     700,
+     4750
+    ],
+    "inputs": [
+     {
+      "name": "A",
+      "type": "number",
+      "link": 16,
+      "slot_index": 0
+     },
+     {
+      "name": "B",
+      "type": "number",
+      "link": 31,
+      "slot_index": 0
+     }
+    ],
+    "outputs": [
+     {
+      "name": "true",
+      "type": "number",
+      "links": [],
+      "slot_index": 0
+     },
+     {
+      "name": "false",
+      "type": "number",
+      "links": [],
+      "slot_index": 1
+     },
+     {
+      "name": "result",
+      "type": "number",
+      "links": [],
+      "slot_index": 2
+     }
+    ],
+    "properties": {
+     "OP": "||"
+    }
+   },
+   {
+    "id": 33,
+    "type": "Action/FUTURE_CLOSE",
+    "serviceName": "FUTURE_CLOSE",
+    "pos": [
+     1000,
+     4900
+    ],
+    "inputs": [
+     {
+      "name": "Trigger",
+      "type": "number",
+      "link": 32,
+      "slot_index": 0
+     }
+    ],
+    "outputs": [],
+    "properties": {
+     "Name": "retest-55 limit close",
+     "Exchange": "Binance",
+     "Pair": "BTC-USDT",
+     "Position Type": "Long",
+     "Order Type": "Market",
+     "Amount": 100,
+     "Amount as": "% of account",
+     "Margin Type": "USDT",
+     "Cancel open orders and replace?": "Cancel all open orders",
+     "Repeat order if consecutive signals occur?": "No",
+     "Max Repeat Orders": 0
+    }
+   }
+  ]
+ }
+}

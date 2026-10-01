@@ -1,0 +1,17 @@
+{
+  "name": "arrowalgo-scenario-skills",
+  "description": "Skills for building, backtesting and honestly validating ArrowAlgo trading scenarios via MCP",
+  "version": "0.1.0",
+  "keywords": [
+    "arrowalgo",
+    "trading",
+    "backtesting",
+    "mcp",
+    "strategy-validation"
+  ],
+  "homepage": "https://github.com/davincialgo/scenario-skills",
+  "repository": "https://github.com/davincialgo/scenario-skills",
+  "author": {
+    "name": "davincialgo"
+  }
+}

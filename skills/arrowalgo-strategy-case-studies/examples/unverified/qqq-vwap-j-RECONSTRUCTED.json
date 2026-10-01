@@ -1,0 +1,439 @@
+{
+ "name": "QQQ VWAP reversion J (reconstructed from spec - verify before use)",
+ "warmupHours": 48,
+ "verifyAgainst": {
+  "note": "original quarters Aug-15-2025..Aug-15-2026: +1.67/+7.32/+6.32/+10.12 (Q4 ~139 trades)"
+ },
+ "graph": {
+  "nodes": [
+   {
+    "id": 1,
+    "type": "Data Watcher/Alpaca",
+    "serviceName": "Alpaca",
+    "pos": [
+     400,
+     220
+    ],
+    "inputs": [],
+    "properties": {
+     "Pair": "QQQ-USD",
+     "Interval": "15m",
+     "Output": "close"
+    }
+   },
+   {
+    "id": 2,
+    "type": "Data Watcher/Alpaca",
+    "serviceName": "Alpaca",
+    "pos": [
+     700,
+     340
+    ],
+    "inputs": [],
+    "properties": {
+     "Pair": "QQQ-USD",
+     "Interval": "15m",
+     "Output": "high"
+    }
+   },
+   {
+    "id": 3,
+    "type": "Data Watcher/Alpaca",
+    "serviceName": "Alpaca",
+    "pos": [
+     1000,
+     460
+    ],
+    "inputs": [],
+    "properties": {
+     "Pair": "QQQ-USD",
+     "Interval": "15m",
+     "Output": "low"
+    }
+   },
+   {
+    "id": 4,
+    "type": "Data Watcher/Alpaca",
+    "serviceName": "Alpaca",
+    "pos": [
+     1300,
+     580
+    ],
+    "inputs": [],
+    "properties": {
+     "Pair": "QQQ-USD",
+     "Interval": "15m",
+     "Output": "volume"
+    }
+   },
+   {
+    "id": 5,
+    "type": "indicator/vwap",
+    "serviceName": "indicator",
+    "pos": [
+     1600,
+     700
+    ],
+    "inputs": [
+     {
+      "name": "close",
+      "link": 1,
+      "slot_index": 0
+     },
+     {
+      "name": "volume",
+      "link": 4,
+      "slot_index": 0
+     }
+    ],
+    "properties": {
+     "time_period": 26
+    }
+   },
+   {
+    "id": 6,
+    "type": "indicator/atr",
+    "serviceName": "indicator",
+    "pos": [
+     100,
+     820
+    ],
+    "inputs": [
+     {
+      "name": "high",
+      "link": 2,
+      "slot_index": 0
+     },
+     {
+      "name": "low",
+      "link": 3,
+      "slot_index": 0
+     },
+     {
+      "name": "close",
+      "link": 1,
+      "slot_index": 0
+     }
+    ],
+    "properties": {
+     "time_period": 14
+    }
+   },
+   {
+    "id": 7,
+    "type": "math/scale",
+    "serviceName": "math",
+    "pos": [
+     400,
+     940
+    ],
+    "inputs": [
+     {
+      "name": "in",
+      "link": 6,
+      "slot_index": 0
+     }
+    ],
+    "properties": {
+     "factor": 2
+    }
+   },
+   {
+    "id": 8,
+    "type": "math/operation",
+    "serviceName": "math",
+    "pos": [
+     700,
+     1060
+    ],
+    "inputs": [
+     {
+      "name": "A",
+      "link": 5,
+      "slot_index": 0
+     },
+     {
+      "name": "B",
+      "link": 7,
+      "slot_index": 0
+     }
+    ],
+    "properties": {
+     "OP": "-"
+    }
+   },
+   {
+    "id": 9,
+    "type": "math/condition",
+    "serviceName": "math",
+    "pos": [
+     1000,
+     1180
+    ],
+    "inputs": [
+     {
+      "name": "A",
+      "link": 1,
+      "slot_index": 0
+     },
+     {
+      "name": "B",
+      "link": 8,
+      "slot_index": 0
+     }
+    ],
+    "properties": {
+     "OP": "<="
+    }
+   },
+   {
+    "id": 10,
+    "type": "indicator/TimeFilter",
+    "pos": [
+     1300,
+     1300
+    ],
+    "inputs": [
+     {
+      "name": "trigger",
+      "link": 1,
+      "slot_index": 0
+     }
+    ],
+    "properties": {
+     "start_hour": 0,
+     "end_hour": 24,
+     "days": "Mon,Tue,Wed,Fri"
+    }
+   },
+   {
+    "id": 11,
+    "type": "math/fix_number",
+    "serviceName": "math",
+    "pos": [
+     1600,
+     1420
+    ],
+    "inputs": [],
+    "properties": {
+     "number": 1
+    }
+   },
+   {
+    "id": 12,
+    "type": "math/condition",
+    "serviceName": "math",
+    "pos": [
+     100,
+     1540
+    ],
+    "inputs": [
+     {
+      "name": "A",
+      "link": 10,
+      "slot_index": 0
+     },
+     {
+      "name": "B",
+      "link": 11,
+      "slot_index": 0
+     }
+    ],
+    "properties": {
+     "OP": "=="
+    }
+   },
+   {
+    "id": 13,
+    "type": "math/condition",
+    "serviceName": "math",
+    "pos": [
+     400,
+     1660
+    ],
+    "inputs": [
+     {
+      "name": "A",
+      "link": 9,
+      "slot_index": 2
+     },
+     {
+      "name": "B",
+      "link": 12,
+      "slot_index": 2
+     }
+    ],
+    "properties": {
+     "OP": "&&"
+    }
+   },
+   {
+    "id": 14,
+    "type": "Action/BUY",
+    "serviceName": "BUY",
+    "pos": [
+     700,
+     1780
+    ],
+    "inputs": [
+     {
+      "name": "Trigger",
+      "link": 13,
+      "slot_index": 0
+     }
+    ],
+    "properties": {
+     "Name": "J entry",
+     "Exchange": "Alpaca",
+     "Pair": "QQQ-USD",
+     "Order Type": "Market",
+     "Amount": 95,
+     "Amount as": "% of account",
+     "Cancel open orders and replace?": "Keep all open orders",
+     "Repeat order if consecutive signals occur?": "No"
+    }
+   },
+   {
+    "id": 15,
+    "type": "math/condition",
+    "serviceName": "math",
+    "pos": [
+     1000,
+     1900
+    ],
+    "inputs": [
+     {
+      "name": "A",
+      "link": 1,
+      "slot_index": 0
+     },
+     {
+      "name": "B",
+      "link": 5,
+      "slot_index": 0
+     }
+    ],
+    "properties": {
+     "OP": ">="
+    }
+   },
+   {
+    "id": 16,
+    "type": "math/scale",
+    "serviceName": "math",
+    "pos": [
+     1300,
+     2020
+    ],
+    "inputs": [
+     {
+      "name": "in",
+      "link": 6,
+      "slot_index": 0
+     }
+    ],
+    "properties": {
+     "factor": 3
+    }
+   },
+   {
+    "id": 17,
+    "type": "math/operation",
+    "serviceName": "math",
+    "pos": [
+     1600,
+     2140
+    ],
+    "inputs": [
+     {
+      "name": "A",
+      "link": 5,
+      "slot_index": 0
+     },
+     {
+      "name": "B",
+      "link": 16,
+      "slot_index": 0
+     }
+    ],
+    "properties": {
+     "OP": "-"
+    }
+   },
+   {
+    "id": 18,
+    "type": "math/condition",
+    "serviceName": "math",
+    "pos": [
+     100,
+     2260
+    ],
+    "inputs": [
+     {
+      "name": "A",
+      "link": 1,
+      "slot_index": 0
+     },
+     {
+      "name": "B",
+      "link": 17,
+      "slot_index": 0
+     }
+    ],
+    "properties": {
+     "OP": "<="
+    }
+   },
+   {
+    "id": 19,
+    "type": "math/condition",
+    "serviceName": "math",
+    "pos": [
+     400,
+     2380
+    ],
+    "inputs": [
+     {
+      "name": "A",
+      "link": 15,
+      "slot_index": 2
+     },
+     {
+      "name": "B",
+      "link": 18,
+      "slot_index": 2
+     }
+    ],
+    "properties": {
+     "OP": "||"
+    }
+   },
+   {
+    "id": 20,
+    "type": "Action/SELL",
+    "serviceName": "SELL",
+    "pos": [
+     700,
+     100
+    ],
+    "inputs": [
+     {
+      "name": "Trigger",
+      "link": 19,
+      "slot_index": 0
+     }
+    ],
+    "properties": {
+     "Name": "J exit (TP at VWAP or stop VWAP-3ATR)",
+     "Exchange": "Alpaca",
+     "Pair": "QQQ-USD",
+     "Order Type": "Market",
+     "Amount": 100,
+     "Amount as": "% of account",
+     "Cancel open orders and replace?": "Keep all open orders",
+     "Repeat order if consecutive signals occur?": "No"
+    }
+   }
+  ]
+ }
+}

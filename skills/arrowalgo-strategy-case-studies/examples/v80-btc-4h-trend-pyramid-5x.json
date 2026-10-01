@@ -1,0 +1,856 @@
+{
+ "name": "V80 BTC 4h trend pyramid 5x/15% (ADX30)",
+ "warmupHours": 1224,
+ "graph": {
+  "nodes": [
+   {
+    "id": 1,
+    "type": "Data Watcher/Binance",
+    "serviceName": "Binance",
+    "pos": [
+     100,
+     100
+    ],
+    "inputs": [],
+    "properties": {
+     "Pair": "BTC-USDT",
+     "Interval": "1d",
+     "Output": "close"
+    }
+   },
+   {
+    "id": 2,
+    "type": "indicator/sma",
+    "serviceName": "indicator",
+    "pos": [
+     400,
+     100
+    ],
+    "inputs": [
+     {
+      "name": "in",
+      "link": 1,
+      "slot_index": 0
+     }
+    ],
+    "properties": {
+     "time_period": 50
+    }
+   },
+   {
+    "id": 3,
+    "type": "math/condition",
+    "serviceName": "math",
+    "pos": [
+     700,
+     100
+    ],
+    "inputs": [
+     {
+      "name": "A",
+      "link": 1,
+      "slot_index": 0
+     },
+     {
+      "name": "B",
+      "link": 2,
+      "slot_index": 0
+     }
+    ],
+    "properties": {
+     "OP": ">"
+    }
+   },
+   {
+    "id": 4,
+    "type": "math/variable",
+    "serviceName": "math",
+    "pos": [
+     1000,
+     100
+    ],
+    "inputs": [
+     {
+      "name": "in",
+      "link": 3,
+      "slot_index": 2
+     }
+    ],
+    "properties": {
+     "default": 0,
+     "block_name": "macro_bull"
+    }
+   },
+   {
+    "id": 10,
+    "type": "Data Watcher/Binance",
+    "serviceName": "Binance",
+    "pos": [
+     100,
+     400
+    ],
+    "inputs": [],
+    "properties": {
+     "Pair": "BTC-USDT",
+     "Interval": "4h",
+     "Output": "close"
+    }
+   },
+   {
+    "id": 11,
+    "type": "Data Watcher/Binance",
+    "serviceName": "Binance",
+    "pos": [
+     100,
+     550
+    ],
+    "inputs": [],
+    "properties": {
+     "Pair": "BTC-USDT",
+     "Interval": "4h",
+     "Output": "high"
+    }
+   },
+   {
+    "id": 12,
+    "type": "Data Watcher/Binance",
+    "serviceName": "Binance",
+    "pos": [
+     100,
+     700
+    ],
+    "inputs": [],
+    "properties": {
+     "Pair": "BTC-USDT",
+     "Interval": "4h",
+     "Output": "low"
+    }
+   },
+   {
+    "id": 80,
+    "type": "Data Watcher/Binance",
+    "serviceName": "Binance",
+    "pos": [
+     100,
+     1500
+    ],
+    "inputs": [],
+    "properties": {
+     "Pair": "BTC-USDT",
+     "Interval": "4h",
+     "Output": "volume"
+    }
+   },
+   {
+    "id": 13,
+    "type": "indicator/vidya",
+    "serviceName": "indicator",
+    "pos": [
+     400,
+     400
+    ],
+    "inputs": [
+     {
+      "name": "in",
+      "link": 10,
+      "slot_index": 0
+     }
+    ],
+    "properties": {
+     "short_period": 10,
+     "long_period": 150,
+     "alpha": 0.2
+    }
+   },
+   {
+    "id": 14,
+    "type": "math/condition",
+    "serviceName": "math",
+    "pos": [
+     700,
+     400
+    ],
+    "inputs": [
+     {
+      "name": "A",
+      "link": 10,
+      "slot_index": 0
+     },
+     {
+      "name": "B",
+      "link": 13,
+      "slot_index": 0
+     }
+    ],
+    "properties": {
+     "OP": ">"
+    }
+   },
+   {
+    "id": 15,
+    "type": "indicator/adx",
+    "serviceName": "indicator",
+    "pos": [
+     400,
+     600
+    ],
+    "inputs": [
+     {
+      "name": "high",
+      "link": 11,
+      "slot_index": 0
+     },
+     {
+      "name": "low",
+      "link": 12,
+      "slot_index": 0
+     },
+     {
+      "name": "close",
+      "link": 10,
+      "slot_index": 0
+     }
+    ],
+    "properties": {
+     "time_period": 14
+    }
+   },
+   {
+    "id": 16,
+    "type": "math/fix_number",
+    "serviceName": "math",
+    "pos": [
+     400,
+     750
+    ],
+    "inputs": [],
+    "properties": {
+     "number": 30
+    }
+   },
+   {
+    "id": 17,
+    "type": "math/condition",
+    "serviceName": "math",
+    "pos": [
+     700,
+     600
+    ],
+    "inputs": [
+     {
+      "name": "A",
+      "link": 15,
+      "slot_index": 0
+     },
+     {
+      "name": "B",
+      "link": 16,
+      "slot_index": 0
+     }
+    ],
+    "properties": {
+     "OP": ">"
+    }
+   },
+   {
+    "id": 18,
+    "type": "indicator/di",
+    "serviceName": "indicator",
+    "pos": [
+     400,
+     900
+    ],
+    "inputs": [
+     {
+      "name": "high",
+      "link": 11,
+      "slot_index": 0
+     },
+     {
+      "name": "low",
+      "link": 12,
+      "slot_index": 0
+     },
+     {
+      "name": "close",
+      "link": 10,
+      "slot_index": 0
+     }
+    ],
+    "properties": {
+     "time_period": 14
+    }
+   },
+   {
+    "id": 19,
+    "type": "math/condition",
+    "serviceName": "math",
+    "pos": [
+     700,
+     900
+    ],
+    "inputs": [
+     {
+      "name": "A",
+      "link": 18,
+      "slot_index": 0
+     },
+     {
+      "name": "B",
+      "link": 18,
+      "slot_index": 1
+     }
+    ],
+    "properties": {
+     "OP": ">"
+    }
+   },
+   {
+    "id": 20,
+    "type": "indicator/atr",
+    "serviceName": "indicator",
+    "pos": [
+     400,
+     1100
+    ],
+    "inputs": [
+     {
+      "name": "high",
+      "link": 11,
+      "slot_index": 0
+     },
+     {
+      "name": "low",
+      "link": 12,
+      "slot_index": 0
+     },
+     {
+      "name": "close",
+      "link": 10,
+      "slot_index": 0
+     }
+    ],
+    "properties": {
+     "time_period": 14
+    }
+   },
+   {
+    "id": 21,
+    "type": "indicator/sma",
+    "serviceName": "indicator",
+    "pos": [
+     700,
+     1100
+    ],
+    "inputs": [
+     {
+      "name": "in",
+      "link": 20,
+      "slot_index": 0
+     }
+    ],
+    "properties": {
+     "time_period": 14
+    }
+   },
+   {
+    "id": 22,
+    "type": "math/condition",
+    "serviceName": "math",
+    "pos": [
+     1000,
+     1100
+    ],
+    "inputs": [
+     {
+      "name": "A",
+      "link": 20,
+      "slot_index": 0
+     },
+     {
+      "name": "B",
+      "link": 21,
+      "slot_index": 0
+     }
+    ],
+    "properties": {
+     "OP": ">"
+    }
+   },
+   {
+    "id": 25,
+    "type": "math/variable",
+    "serviceName": "math",
+    "pos": [
+     700,
+     300
+    ],
+    "inputs": [
+     {
+      "name": "in",
+      "link": null,
+      "slot_index": 0
+     }
+    ],
+    "properties": {
+     "default": 0,
+     "block_name": "macro_bull"
+    }
+   },
+   {
+    "id": 81,
+    "type": "indicator/sma",
+    "serviceName": "indicator",
+    "pos": [
+     400,
+     1500
+    ],
+    "inputs": [
+     {
+      "name": "in",
+      "link": 80,
+      "slot_index": 0
+     }
+    ],
+    "properties": {
+     "time_period": 14
+    }
+   },
+   {
+    "id": 82,
+    "type": "math/condition",
+    "serviceName": "math",
+    "pos": [
+     700,
+     1500
+    ],
+    "inputs": [
+     {
+      "name": "A",
+      "link": 80,
+      "slot_index": 0
+     },
+     {
+      "name": "B",
+      "link": 81,
+      "slot_index": 0
+     }
+    ],
+    "properties": {
+     "OP": ">"
+    }
+   },
+   {
+    "id": 90,
+    "type": "indicator/linregslope",
+    "serviceName": "indicator",
+    "pos": [
+     400,
+     1300
+    ],
+    "inputs": [
+     {
+      "name": "in",
+      "link": 10,
+      "slot_index": 0
+     }
+    ],
+    "properties": {
+     "time_period": 20
+    }
+   },
+   {
+    "id": 91,
+    "type": "math/fix_number",
+    "serviceName": "math",
+    "pos": [
+     400,
+     1400
+    ],
+    "inputs": [],
+    "properties": {
+     "number": 0
+    }
+   },
+   {
+    "id": 92,
+    "type": "math/condition",
+    "serviceName": "math",
+    "pos": [
+     700,
+     1300
+    ],
+    "inputs": [
+     {
+      "name": "A",
+      "link": 90,
+      "slot_index": 0
+     },
+     {
+      "name": "B",
+      "link": 91,
+      "slot_index": 0
+     }
+    ],
+    "properties": {
+     "OP": ">"
+    }
+   },
+   {
+    "id": 30,
+    "type": "math/condition",
+    "serviceName": "math",
+    "pos": [
+     1300,
+     700
+    ],
+    "inputs": [
+     {
+      "name": "A1",
+      "link": 14,
+      "slot_index": 0
+     },
+     {
+      "name": "A2",
+      "link": 17,
+      "slot_index": 0
+     },
+     {
+      "name": "A3",
+      "link": 19,
+      "slot_index": 0
+     },
+     {
+      "name": "A4",
+      "link": 22,
+      "slot_index": 0
+     },
+     {
+      "name": "A5",
+      "link": 25,
+      "slot_index": 0
+     },
+     {
+      "name": "A6",
+      "link": 82,
+      "slot_index": 0
+     },
+     {
+      "name": "A7",
+      "link": 92,
+      "slot_index": 0
+     }
+    ],
+    "properties": {
+     "OP": "&&",
+     "Inputs": 7
+    }
+   },
+   {
+    "id": 31,
+    "type": "Action/FUTURE_OPEN",
+    "serviceName": "FUTURE_OPEN",
+    "pos": [
+     1600,
+     700
+    ],
+    "inputs": [
+     {
+      "name": "Trigger",
+      "link": 30,
+      "slot_index": 0
+     }
+    ],
+    "properties": {
+     "Name": "Long Pyramid",
+     "Exchange": "Binance",
+     "Pair": "BTC-USDT",
+     "Position Type": "Long",
+     "Order Type": "Market",
+     "Amount": 15,
+     "Amount as": "% of account",
+     "Cancel open orders and replace?": "Keep all open orders",
+     "Repeat order if consecutive signals occur?": "Yes",
+     "Leverage": 5
+    }
+   },
+   {
+    "id": 50,
+    "type": "indicator/linregslope",
+    "serviceName": "indicator",
+    "pos": [
+     400,
+     1800
+    ],
+    "inputs": [
+     {
+      "name": "in",
+      "link": 10,
+      "slot_index": 0
+     }
+    ],
+    "properties": {
+     "time_period": 25
+    }
+   },
+   {
+    "id": 51,
+    "type": "math/fix_number",
+    "serviceName": "math",
+    "pos": [
+     400,
+     1900
+    ],
+    "inputs": [],
+    "properties": {
+     "number": 0
+    }
+   },
+   {
+    "id": 52,
+    "type": "math/condition",
+    "serviceName": "math",
+    "pos": [
+     700,
+     1800
+    ],
+    "inputs": [
+     {
+      "name": "A",
+      "link": 50,
+      "slot_index": 0
+     },
+     {
+      "name": "B",
+      "link": 51,
+      "slot_index": 0
+     }
+    ],
+    "properties": {
+     "OP": "<"
+    }
+   },
+   {
+    "id": 53,
+    "type": "math/condition",
+    "serviceName": "math",
+    "pos": [
+     700,
+     2000
+    ],
+    "inputs": [
+     {
+      "name": "A",
+      "link": 10,
+      "slot_index": 0
+     },
+     {
+      "name": "B",
+      "link": 13,
+      "slot_index": 0
+     }
+    ],
+    "properties": {
+     "OP": "<"
+    }
+   },
+   {
+    "id": 54,
+    "type": "math/condition",
+    "serviceName": "math",
+    "pos": [
+     1000,
+     1900
+    ],
+    "inputs": [
+     {
+      "name": "A1",
+      "link": 52,
+      "slot_index": 0
+     },
+     {
+      "name": "A2",
+      "link": 53,
+      "slot_index": 0
+     }
+    ],
+    "properties": {
+     "OP": "&&",
+     "Inputs": 2
+    }
+   },
+   {
+    "id": 60,
+    "type": "indicator/PositionStatus",
+    "serviceName": "PositionStatus",
+    "pos": [
+     400,
+     2200
+    ],
+    "inputs": [
+     {
+      "name": "price",
+      "link": 10,
+      "slot_index": 0
+     }
+    ],
+    "properties": {
+     "Name": "Position Status BTC-USDT",
+     "Exchange": "Binance",
+     "Pair": "BTC-USDT"
+    }
+   },
+   {
+    "id": 61,
+    "type": "math/fix_number",
+    "serviceName": "math",
+    "pos": [
+     400,
+     2350
+    ],
+    "inputs": [],
+    "properties": {
+     "number": 5
+    }
+   },
+   {
+    "id": 62,
+    "type": "math/condition",
+    "serviceName": "math",
+    "pos": [
+     700,
+     2200
+    ],
+    "inputs": [
+     {
+      "name": "A",
+      "link": 60,
+      "slot_index": 2
+     },
+     {
+      "name": "B",
+      "link": 61,
+      "slot_index": 0
+     }
+    ],
+    "properties": {
+     "OP": "<"
+    }
+   },
+   {
+    "id": 63,
+    "type": "math/fix_number",
+    "serviceName": "math",
+    "pos": [
+     400,
+     2450
+    ],
+    "inputs": [],
+    "properties": {
+     "number": 8
+    }
+   },
+   {
+    "id": 64,
+    "type": "math/condition",
+    "serviceName": "math",
+    "pos": [
+     700,
+     2400
+    ],
+    "inputs": [
+     {
+      "name": "A",
+      "link": 60,
+      "slot_index": 3
+     },
+     {
+      "name": "B",
+      "link": 63,
+      "slot_index": 0
+     }
+    ],
+    "properties": {
+     "OP": ">"
+    }
+   },
+   {
+    "id": 65,
+    "type": "math/condition",
+    "serviceName": "math",
+    "pos": [
+     1000,
+     2300
+    ],
+    "inputs": [
+     {
+      "name": "A1",
+      "link": 62,
+      "slot_index": 0
+     },
+     {
+      "name": "A2",
+      "link": 64,
+      "slot_index": 0
+     }
+    ],
+    "properties": {
+     "OP": "&&",
+     "Inputs": 2
+    }
+   },
+   {
+    "id": 66,
+    "type": "math/condition",
+    "serviceName": "math",
+    "pos": [
+     1300,
+     2100
+    ],
+    "inputs": [
+     {
+      "name": "A1",
+      "link": 54,
+      "slot_index": 0
+     },
+     {
+      "name": "A2",
+      "link": 65,
+      "slot_index": 0
+     }
+    ],
+    "properties": {
+     "OP": "||",
+     "Inputs": 2
+    }
+   },
+   {
+    "id": 41,
+    "type": "Action/FUTURE_CLOSE",
+    "serviceName": "FUTURE_CLOSE",
+    "pos": [
+     2100,
+     1900
+    ],
+    "inputs": [
+     {
+      "name": "Trigger",
+      "link": 66,
+      "slot_index": 0
+     }
+    ],
+    "properties": {
+     "Name": "Smart Close",
+     "Exchange": "Binance",
+     "Pair": "BTC-USDT",
+     "Position Type": "Long",
+     "Order Type": "Market",
+     "Amount": 100,
+     "Amount as": "% of account",
+     "Cancel open orders and replace?": "Cancel all open orders",
+     "Repeat order if consecutive signals occur?": "No"
+    }
+   }
+  ]
+ }
+}

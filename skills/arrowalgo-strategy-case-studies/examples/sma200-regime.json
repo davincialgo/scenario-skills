@@ -1,0 +1,381 @@
+{
+ "name": "Baseline SMA200 Regime",
+ "warmupHours": 400,
+ "graph": {
+  "nodes": [
+   {
+    "id": 1,
+    "type": "Data Watcher/Binance",
+    "serviceName": "Binance",
+    "pos": [
+     400,
+     100
+    ],
+    "inputs": [],
+    "outputs": [
+     {
+      "name": "close",
+      "type": "number",
+      "links": [],
+      "slot_index": 0
+     }
+    ],
+    "properties": {
+     "Pair": "BTC-USDT",
+     "Interval": "1d",
+     "Output": "close"
+    }
+   },
+   {
+    "id": 2,
+    "type": "indicator/sma",
+    "serviceName": "indicator",
+    "pos": [
+     700,
+     250
+    ],
+    "inputs": [
+     {
+      "name": "in",
+      "type": "number",
+      "link": 1,
+      "slot_index": 0
+     }
+    ],
+    "outputs": [
+     {
+      "name": "out",
+      "type": "number",
+      "links": [],
+      "slot_index": 0
+     }
+    ],
+    "properties": {
+     "time_period": 200
+    }
+   },
+   {
+    "id": 3,
+    "type": "indicator/PositionStatus",
+    "serviceName": "PositionStatus",
+    "pos": [
+     1000,
+     400
+    ],
+    "inputs": [
+     {
+      "name": "price",
+      "type": "number",
+      "link": 1,
+      "slot_index": 0
+     }
+    ],
+    "outputs": [
+     {
+      "name": "in_position",
+      "type": "number",
+      "links": [],
+      "slot_index": 0
+     },
+     {
+      "name": "entry_price",
+      "type": "number",
+      "links": [],
+      "slot_index": 1
+     },
+     {
+      "name": "unrealized_pnl%",
+      "type": "number",
+      "links": [],
+      "slot_index": 2
+     },
+     {
+      "name": "candles_in_position",
+      "type": "number",
+      "links": [],
+      "slot_index": 3
+     },
+     {
+      "name": "direction",
+      "type": "number",
+      "links": [],
+      "slot_index": 4
+     }
+    ],
+    "properties": {
+     "Name": "Position Status BTC-USDT",
+     "Exchange": "Binance",
+     "Pair": "BTC-USDT"
+    }
+   },
+   {
+    "id": 4,
+    "type": "math/fix_number",
+    "serviceName": "math",
+    "pos": [
+     1300,
+     550
+    ],
+    "inputs": [],
+    "outputs": [
+     {
+      "name": "value",
+      "type": "number",
+      "links": [],
+      "slot_index": 0
+     }
+    ],
+    "properties": {
+     "number": 0
+    }
+   },
+   {
+    "id": 5,
+    "type": "math/condition",
+    "serviceName": "math",
+    "pos": [
+     100,
+     700
+    ],
+    "inputs": [
+     {
+      "name": "A",
+      "type": "number",
+      "link": 3,
+      "slot_index": 0
+     },
+     {
+      "name": "B",
+      "type": "number",
+      "link": 4,
+      "slot_index": 0
+     }
+    ],
+    "outputs": [
+     {
+      "name": "true",
+      "type": "number",
+      "links": [],
+      "slot_index": 0
+     },
+     {
+      "name": "false",
+      "type": "number",
+      "links": [],
+      "slot_index": 1
+     },
+     {
+      "name": "result",
+      "type": "number",
+      "links": [],
+      "slot_index": 2
+     }
+    ],
+    "properties": {
+     "OP": "=="
+    }
+   },
+   {
+    "id": 6,
+    "type": "math/condition",
+    "serviceName": "math",
+    "pos": [
+     400,
+     850
+    ],
+    "inputs": [
+     {
+      "name": "A",
+      "type": "number",
+      "link": 1,
+      "slot_index": 0
+     },
+     {
+      "name": "B",
+      "type": "number",
+      "link": 2,
+      "slot_index": 0
+     }
+    ],
+    "outputs": [
+     {
+      "name": "true",
+      "type": "number",
+      "links": [],
+      "slot_index": 0
+     },
+     {
+      "name": "false",
+      "type": "number",
+      "links": [],
+      "slot_index": 1
+     },
+     {
+      "name": "result",
+      "type": "number",
+      "links": [],
+      "slot_index": 2
+     }
+    ],
+    "properties": {
+     "OP": ">"
+    }
+   },
+   {
+    "id": 7,
+    "type": "math/condition",
+    "serviceName": "math",
+    "pos": [
+     700,
+     1000
+    ],
+    "inputs": [
+     {
+      "name": "A",
+      "type": "number",
+      "link": 5,
+      "slot_index": 0
+     },
+     {
+      "name": "B",
+      "type": "number",
+      "link": 6,
+      "slot_index": 0
+     }
+    ],
+    "outputs": [
+     {
+      "name": "true",
+      "type": "number",
+      "links": [],
+      "slot_index": 0
+     },
+     {
+      "name": "false",
+      "type": "number",
+      "links": [],
+      "slot_index": 1
+     },
+     {
+      "name": "result",
+      "type": "number",
+      "links": [],
+      "slot_index": 2
+     }
+    ],
+    "properties": {
+     "OP": "&&"
+    }
+   },
+   {
+    "id": 8,
+    "type": "Action/FUTURE_OPEN",
+    "serviceName": "FUTURE_OPEN",
+    "pos": [
+     1000,
+     1150
+    ],
+    "inputs": [
+     {
+      "name": "Trigger",
+      "type": "number",
+      "link": 7,
+      "slot_index": 0
+     }
+    ],
+    "outputs": [],
+    "properties": {
+     "Name": "sma200 regime open",
+     "Exchange": "Binance",
+     "Pair": "BTC-USDT",
+     "Position Type": "Long",
+     "Order Type": "Market",
+     "Amount": 95,
+     "Amount as": "% of account",
+     "Margin Type": "USDT",
+     "Leverage": 1,
+     "Cancel open orders and replace?": "Cancel open orders only",
+     "Repeat order if consecutive signals occur?": "Yes",
+     "Max Repeat Orders": 0
+    }
+   },
+   {
+    "id": 9,
+    "type": "math/condition",
+    "serviceName": "math",
+    "pos": [
+     1300,
+     1300
+    ],
+    "inputs": [
+     {
+      "name": "A",
+      "type": "number",
+      "link": 1,
+      "slot_index": 0
+     },
+     {
+      "name": "B",
+      "type": "number",
+      "link": 2,
+      "slot_index": 0
+     }
+    ],
+    "outputs": [
+     {
+      "name": "true",
+      "type": "number",
+      "links": [],
+      "slot_index": 0
+     },
+     {
+      "name": "false",
+      "type": "number",
+      "links": [],
+      "slot_index": 1
+     },
+     {
+      "name": "result",
+      "type": "number",
+      "links": [],
+      "slot_index": 2
+     }
+    ],
+    "properties": {
+     "OP": "<"
+    }
+   },
+   {
+    "id": 10,
+    "type": "Action/FUTURE_CLOSE",
+    "serviceName": "FUTURE_CLOSE",
+    "pos": [
+     100,
+     1450
+    ],
+    "inputs": [
+     {
+      "name": "Trigger",
+      "type": "number",
+      "link": 9,
+      "slot_index": 0
+     }
+    ],
+    "outputs": [],
+    "properties": {
+     "Name": "sma200 regime close",
+     "Exchange": "Binance",
+     "Pair": "BTC-USDT",
+     "Position Type": "Long",
+     "Order Type": "Market",
+     "Amount": 100,
+     "Amount as": "% of account",
+     "Margin Type": "USDT",
+     "Cancel open orders and replace?": "Cancel all open orders",
+     "Repeat order if consecutive signals occur?": "No",
+     "Max Repeat Orders": 0
+    }
+   }
+  ]
+ }
+}

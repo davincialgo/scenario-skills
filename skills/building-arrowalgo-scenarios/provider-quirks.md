@@ -22,7 +22,7 @@ These are behaviours that make a backtest diverge from live trading, or that bre
 - **Perps only.** BUY/SELL are rejected, so use `FUTURE_OPEN` / `FUTURE_CLOSE`.
 - **There is no 6h interval.** The scenario is accepted but fails later on missing candles. Use 4h.
 - `market_gain` can read 0, so compute buy-and-hold from candles. Realized `totalReturn` can be positive while the final USDC balance is negative, so score from `finalBalance` and full orders.
-- Daily candles have had corrupt sentinel values before, so sanity-check `get_candles` first.
+- Sanity-check `get_candles` before trusting a window (see the candle checks in `running-arrowalgo-backtests`).
 
 ## Alpaca (US equities and ETFs)
 

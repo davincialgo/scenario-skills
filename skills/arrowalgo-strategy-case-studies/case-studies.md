@@ -2,12 +2,7 @@
 
 These are the full write-ups behind the `arrowalgo-strategy-case-studies` skill. The research ran on ArrowAlgo from April to September 2026. Every figure is the latest corrected one. Figures marked **[RETRACTED]** or **[STALE ENGINE]** are kept so you can recognise them if you see them quoted elsewhere. Don't reuse them.
 
-**Engine eras matter.** Treat any number produced before one of these engine fixes as stale until it is re-run:
-- 2026-04-16: indicator warmup;
-- 2026-07: dynamic amount timing;
-- 2026-08-12: PositionStatus pair scoping;
-- 2026-09-22: limit-cancel margin;
-- 2026-09-30: PositionStatus wiring lag and limit replace.
+**Re-run before quoting.** The engine changes over time, and stored results drifted by hundreds of percent between engine versions. Treat any number you didn't produce on the current engine as stale until you re-run it.
 
 The consistency gate used throughout (12-month windows stepped 3 months, audited order equity):
 - ≥80% of windows positive;
@@ -88,13 +83,13 @@ The consistency gate used throughout (12-month windows stepped 3 months, audited
 - Caveat: meta-selection leak. The decision to refit was made after ADX30 failed in 2025-26.
 - Clean unseen slice only: ADX20 +38.3% vs ADX30 +25.2% vs BTC +12.5%.
 
-**V85-5x ADX20: current corrected baseline (after the 2026-09-30 PositionStatus fix).**
+**V85-5x ADX20: current corrected baseline (engine as of 2026-09-30).**
 - 2022-24: +1,026.5% (MDD 37.6).
 - 2025-01..2026-09-18: +51.7% (MDD 23.4).
 - 2018-06..2021-12: +97.5% (MDD 68.0) vs BTC +530%.
 - **[STALE ENGINE]**: +1,245% / +57.7% / +136.5%. Do not quote these.
 
-**Rolling 12-month windows (2026-09-23/25, pre-09-30 fix; may shift slightly).**
+**Rolling 12-month windows (run 2026-09-23/25; may shift slightly on a re-run).**
 
 | Variant | Positive | Mean | Median | Worst | med/mean | Drop-best-3 | In-window DD |
 |---|---|---|---|---|---|---|---|
@@ -234,7 +229,7 @@ The consistency gate used throughout (12-month windows stepped 3 months, audited
 | 2018-21 | +111.3% (DD 35%) | +530% |
 
 - Funding costs 0.6–5% per year and is not modelled.
-- Walk-forward: IS +83% vs OOS +8%, overfit 0.89, 2/6 OOS windows positive. The post-fix rerun matched.
+- Walk-forward: IS +83% vs OOS +8%, overfit 0.89, 2/6 OOS windows positive.
 
 **What failed and why.**
 - Market entry at the same levels beat the limit in 10/12 comparisons: adverse selection.
@@ -312,7 +307,7 @@ The consistency gate used throughout (12-month windows stepped 3 months, audited
 
 ---
 
-## 10. Shorts (BTC futures, Apr 2026) **[STALE ENGINE: never re-baselined after the warmup fix; treat as unverified]**
+## 10. Shorts (BTC futures, Apr 2026) **[STALE ENGINE: never re-run on the current engine; treat as unverified]**
 
 **Philosophy ("black swan catcher", from S-E1/E2).**
 - Wide trailing stop (12–15%) so winners ride crashes.
@@ -338,7 +333,6 @@ The consistency gate used throughout (12-month windows stepped 3 months, audited
 ## 11. Path-signature model (arXiv 2308.15135) and the JavaScript block
 
 - **Capability:** an `indicator/JAVASCRIPT` block computing 21 order-2 signature features of BTC/ETH paths ran correctly on the engine. 176/176 values matched, with the expected BUY/SELL/BUY sequence.
-- The spot-equity accounting bug found along the way was fixed and verified (09-16).
 - **Fitted paper test (local, holdout 2023–2026-06, 5 bp):**
   - TLT signature +4.7% (Sharpe 0.41) vs Markowitz −2.0%.
   - DBC/BND/VTI +16.3% (Sharpe 1.08) vs Markowitz +12.8% (1.07).
@@ -365,7 +359,7 @@ The consistency gate used throughout (12-month windows stepped 3 months, audited
 
 ---
 
-## 13. Day-trading / small-profit routes (closed on the fixed engine, Aug 2026)
+## 13. Day-trading / small-profit routes (closed, Aug 2026)
 
 Fast exits, profit targets, close-and-reopen, and 1h RSI dip-buying all lost. Examples:
 - 1h RSI dip layer: bull +18.6% vs market +102%, OOS −3.7%.

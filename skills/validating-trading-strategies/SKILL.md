@@ -112,7 +112,7 @@ Establish a positive edge at 1x first, because leverage amplifies a negative edg
 | Thought | Reality |
 |---|---|
 | "It beat SPY this year" | One loud year is not a strategy. +27.7% over 4 quarters was +55% vs QQQ +116% over 18. |
-| "The stored result says +X%" | Re-run it. Stored rows drifted by hundreds of percent across engine fixes. |
+| "The stored result says +X%" | Re-run it. Stored rows drifted by hundreds of percent across engine versions. |
 | "This stop / filter improves the holdout" | Choosing it because of the holdout is selecting on the holdout. Every stop we tested flipped sign between periods. |
 | "Passes 8/8 neighbours" | Were the cells independent? Did they share a graph bug? |
 | "It worked in the week that motivated it" | That pullback entry was +18% in that week, −3% on the holdout, and earned a tenth of the baseline over 4.5 years. |

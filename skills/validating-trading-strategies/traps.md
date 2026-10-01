@@ -16,7 +16,6 @@ Each trap below happened in real research and changed a conclusion.
 | 10 | Don't judge on one year or four quarters | 4 quarters at +27.7% became 13/18 quarters at +55%, against QQQ +116%. |
 | 11 | Short OOS windows that end with an open position are bets on that position | +1,870% MTM was −1.8% realized. |
 | 12 | Re-run stored baselines before using them as the bar | "V85 −5.33% vs C16 +84%" reproduced neither number. |
-| 13 | Rebuild the control after any wiring change | Two logically identical exits gave +1,026% and +1,245% (a platform lag, since fixed). Compare against a rebuilt control. |
 | 14 | Concurrent launches corrupt results silently | A 0-order "finished" run looks legitimate for a gated strategy. |
 | 15 | `profit_usd` is gross of fees | Summing it overstated profit by about 10%. |
 | 16 | Indicator names don't guarantee identical formulas | Platform RSI(2) restarted on a 20-close window, and VWAP is rolling. Compare values in debug frames before porting a result. |

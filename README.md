@@ -89,9 +89,9 @@ node --test skills/building-arrowalgo-scenarios/validate-graph.test.js
 ## Important
 
 - **Not financial advice.** These are research notes and tooling. Most of the strategies documented here *failed*, and that is the point. Backtests, even honest ones, overstate live results. Trading involves risk of loss, especially with leverage.
-- Platform behaviour is recorded as of **2026-09-30**. Known fixed and open issues are in [`platform-status.md`](skills/running-arrowalgo-backtests/platform-status.md). Re-check older notes before relying on them.
+- Platform behaviour is recorded as of **2026-09-30**. Known open issues are in [`platform-status.md`](skills/running-arrowalgo-backtests/platform-status.md). Re-check older notes before relying on them.
 - Use of Arrow Algo is subject to its [terms of service](https://arrowalgo.com/terms-of-service/).
 
 ## Contributing
 
-Found a new trap, a fixed platform issue, or a strategy result that holds up under the validation checklist? Open an issue or PR. Please include the evidence: the backtest window, the warmup, costs, and the benchmark.
+Found a new trap, a platform issue that has since been fixed (so it can be removed), or a strategy result that holds up under the validation checklist? Open an issue or PR. Please include the evidence: the backtest window, the warmup, costs, and the benchmark.

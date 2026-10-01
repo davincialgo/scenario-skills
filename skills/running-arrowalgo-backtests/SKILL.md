@@ -61,4 +61,4 @@ Work through [triage-and-bug-reports.md](triage-and-bug-reports.md) in order, an
 
 A suspected platform bug only goes into a report after steps 1–9 are ruled out. Once a platform bug is confirmed, **stop tuning the strategy around it**, and report it with the template in that file.
 
-[platform-status.md](platform-status.md) lists which known issues are fixed and which are still open, so you don't work around a bug that no longer exists.
+[platform-status.md](platform-status.md) lists the known open platform issues and their workarounds.

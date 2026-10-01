@@ -66,7 +66,7 @@ With the connector and the skills both active, try:
 
 - *"Build a BTC daily trend scenario on Binance futures: long above the 200-day SMA, flat below. Validate the graph, then backtest it from 2018 to today."*
 - *"Backtest my scenario 'My Strategy' over rolling 12-month windows since 2019 and tell me honestly whether it beats buy-and-hold after costs."*
-- *"My backtest says +180% but annualizedReturn is 18000. What's going on, and should I trust it?"*
+- *"My backtest says +180% in 12 months at 5x. Should I trust it and go live?"*
 - *"I want to add a 3% stop-loss to this strategy. Test it properly, without fooling ourselves."*
 - *"Has anyone tried buying support with limit orders? Start me from an example scenario."*
 

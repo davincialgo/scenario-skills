@@ -28,7 +28,7 @@ The backtest engine is mostly right. **Your bookkeeping usually isn't.** Most "t
 ## Reading results
 
 - **Gate on `warmupHours`.** A value of `0` or `null` means a cold start: the run silently skipped early signals and any losses in them.
-- Use `markToMarketReturn` with `performanceBasis`. **Ignore `annualizedReturn`**, which is currency-scaled. If a run ends with an open position, extend the window or report realized and MTM side by side.
+- Use `markToMarketReturn` with `performanceBasis`. Use `annualizedReturn` only when `annualizedReturnVersion` is present (a simple, non-compounded MTM %). Unversioned legacy values are currency-scaled, so re-run those backtests. If a run ends with an open position, extend the window or report realized and MTM side by side.
 - **Page through `get_backtest_orders`** (`format:"full"`, `limit`/`offset`) until the row count equals `total`. Summary rows drop `leverage`.
 - Pass an explicit `limit` to `get_candles`. The default of 100 bars silently truncates long windows. Fail if the count you get back equals the cap.
 - A finished run with no trades can omit its return fields. Report 0% only when the final balance equals the start balance.

@@ -9,7 +9,6 @@ Observed through **2026-09-30**. Before you work around one of these, re-check i
 | Large simultaneous launches cause timeouts and silent "finished" runs with 0 orders | Run ≤2 at once with a known control; void the batch if the control shows 0 orders |
 | `run_backtest` HTTP 504 can still create the backtest | Never auto-retry; reconcile with `list_backtests` |
 | `optimize` sweep returns a groupId but spawns no children (last seen Aug 2026) | Clone the scenario for each variant. `run_walkforward` works |
-| `annualizedReturn` is currency-scaled (~100× on a 10k account) | Ignore it; compute it yourself |
 | No-trade finished runs omit return fields | 0% only if final balance = start balance |
 | Hyperliquid: `market_gain` = 0; realized return can be positive while final balance is negative; summary order status can be wrong | Buy-and-hold from candles; score from `finalBalance` and full orders |
 | Hyperliquid 6h is accepted, then fails on missing candles | Use 4h or 1d |

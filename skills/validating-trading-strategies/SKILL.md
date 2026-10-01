@@ -30,7 +30,7 @@ If it is a no-go, say exactly which checks would turn it into a go. If they stil
 
 Fields that are easy to misread:
 - `totalReturn` is **realized only** while a position is still open.
-- `annualizedReturn` is **currency-scaled** (about 100× the percentage on a 10k account), so ignore it.
+- `annualizedReturn` is trustworthy only when `annualizedReturnVersion` is present (a simple, non-compounded MTM %). Unversioned legacy values are currency-scaled, so re-run those backtests.
 - `profit_usd` on orders is **gross of fees**.
 - Use `markToMarketReturn` with `performanceBasis`, or your own ledger audit.
 

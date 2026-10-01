@@ -65,7 +65,7 @@ Node ids don't have to be contiguous.
 | `indicator/Latch` | `Latch` | `SET`(0), `RESET`(1) | `value` | `default` |
 | `indicator/TrailingStop` | `TrailingStop` | `Price`, `Stop Distance %` | `True`(0), `False`(1) only. Slot 2 gives zero results with no error | `Market`, `Position Type`, `Exchange`, `Pair` |
 | `indicator/JAVASCRIPT` | `JAVASCRIPT` | declared names | declared names | see below |
-| `math/condition` | `math` | `A`,`B`[,`C`…] | `true`(0), `false`(1), `result`(2) | `OP` (> < >= <= == != && \|\|), `Inputs` (2–10) |
+| `math/condition` | `math` | `A`,`B`[,`C`…] | `true`(0), `false`(1), `result`(2) | `OP` (> < >= <= == != && \|\|), `Inputs` (2–10). With 3+ inputs only `== != && \|\|` combine them all; `> <` silently compare just A and B |
 | `math/fix_number` | `math` | — | `value` | `number` |
 | `math/variable` | `math` | `in` (writer) or none (reader) | `value` | `block_name`, `default` |
 | `math/gate` | `math` | `v`,`A`,`B` | `out` (= v ? A : B) | — |
@@ -78,7 +78,7 @@ Node ids don't have to be contiguous.
 | `Action/FUTURE_CLOSE` | `FUTURE_CLOSE` | `Trigger`, `price`?, `Amount`? | — | same minus Leverage |
 | `Action/BUY` / `Action/SELL` | `BUY` / `SELL` | `Trigger`, `price`?, `Amount`? | — | spot only (not on Hyperliquid) |
 
-How the `serviceName` follows from `type`:
+The backend derives `serviceName` from `type`, so leave it out of new graphs. The column above, and the mapping below, are for reading fetched graphs and checking that an existing value is correct:
 - `Data Watcher/X` → `X`
 - `math/*` → `math`
 - `Action/X` → `X`

@@ -68,8 +68,8 @@ function validate(graph) {
   for (const node of nodes.values()) {
     const where = `node ${node.id} (${node.type})`;
     const expected = expectedService(node.type);
-    if (!node.serviceName) warnings.push(`${where}: no serviceName (expected ${expected?.join(" or ") ?? "?"})`);
-    else if (expected && !expected.includes(node.serviceName))
+    // serviceName may be omitted (the backend derives it from type); a wrong one misroutes the block.
+    if (node.serviceName && expected && !expected.includes(node.serviceName))
       errors.push(`${where}: serviceName "${node.serviceName}" should be ${expected.join(" or ")}`);
 
     for (const input of node.inputs || []) {
@@ -89,6 +89,8 @@ function validate(graph) {
     if (node.type === "math/condition") {
       const connected = (node.inputs || []).filter((i) => i.link != null).length;
       if (connected < 2) errors.push(`${where}: condition has ${connected} connected input(s); needs at least 2`);
+      if ((node.inputs || []).length > 2 && /^(>|<|>=|<=)$/.test(props.OP))
+        warnings.push(`${where}: "${props.OP}" with ${(node.inputs || []).length} inputs only compares A and B; use && / || to combine more`);
       if (props.Inputs != null && Number(props.Inputs) !== (node.inputs || []).length)
         warnings.push(`${where}: Inputs=${props.Inputs} but ${(node.inputs || []).length} inputs are declared`);
     }

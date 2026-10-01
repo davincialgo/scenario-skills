@@ -6,7 +6,7 @@ These are behaviours that make a backtest diverge from live trading, or that bre
 
 - **Funding is not modelled** on perpetual futures. Estimate it from the exchange's public funding history: for a 1x BTC long that was 0.6–5% a year, or 10–17% of equity over multi-year spans.
 - Fees are about 5 bp per side on Binance. A 100% allocation doesn't reliably reserve its own entry fee, so request about 99.95%.
-- **`annualizedReturn` is currency-scaled**, roughly 100× the percentage on a 10k account. Don't use it.
+- Use `annualizedReturn` only when `annualizedReturnVersion` is present (a simple, non-compounded MTM %). Unversioned legacy values are currency-scaled, so re-run those backtests.
 - Read `markToMarketReturn` together with `performanceBasis`. `totalReturn` only counts realized PnL while a position is still open.
 - Platform indicators may not match the textbook formula. For example, VWAP is rolling, not session-anchored, and RSI may restart on a window. If you port a result from elsewhere, compare values with `get_backtest_debug_at_time` first.
 - `order_history` and `TrailingStop` have **no pair scoping**, which makes them unsafe in multi-pair graphs.

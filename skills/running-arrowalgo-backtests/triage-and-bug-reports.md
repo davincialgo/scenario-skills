@@ -7,7 +7,7 @@ Work through the steps in order, and stop at the first explanation you find.
 3. **Sibling control.** If a shared component is the suspect, run sibling scenarios that use that same component. A change to the shared component must move every one of them; if the siblings reproduce to 4 decimal places, the component is fine. Watch for **selection artefacts**: "all new entries now pass the ADX bar" can simply mean the new run trades less.
 4. **Warmup.** A `warmupHours` of `null` or `0`, or a first order more than 7 days after the start, means the run started cold.
 5. **Graph structure.** Use the graph returned by `get_scenario`, not your local copy, and check:
-   - every node has the right `serviceName`;
+   - any `serviceName` present is the right one (better: omit it and let the backend derive it);
    - no input points at a missing node or slot;
    - no stale inputs were left behind after nodes were removed;
    - there are no cycles;
